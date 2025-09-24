@@ -42,10 +42,14 @@ The above function loads all 60 tables of this database, which is a lot! So step
 A selected set of documentation have been provided in `documentation/`. Open up the Database Quickstart Guide for reference as you work through the problems below.
 
 ### Q1 (1 point)
+```{r}
+unique(stock$commonname)
 
+```
 One of the main metadata tables is 'stock':
 
 -   How many stocks are there and how many species do they represent?
+There are 1514 different stocks, and they represent 410 different species.
 
 -   What are the top three most common stocks? (Okay to use common names; these are standardized for fish)
 
