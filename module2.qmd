@@ -52,6 +52,7 @@ One of the main metadata tables is 'stock':
 There are 1514 different stocks, and they represent 410 different species.
 
 -   What are the top three most common stocks? (Okay to use common names; these are standardized for fish)
+The most common are the Pink Salmon, Sockeye salmon, and the Chum salmon.
 
 -   In your own words, describe the unit of observation in the 'stock' table and some associated variables that describe it.
 
