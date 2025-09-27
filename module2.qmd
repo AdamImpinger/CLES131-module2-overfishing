@@ -79,10 +79,10 @@ Probably stockid
 In section B of the Database Quick Guide, additional metadata tables are listed in section B. With your data exploration skills, complete the following table:
 
 | B table      | Associated table | join column from B | join column from other |
-|------------------|------------------|------------------|------------------|
-| area         |                  |                    |                        |
-| assessmethod |                  |                    |                        |
-| assessor     |                  |                    |                        |
+|--------------|------------------|--------------------|------------------------|
+| area         |   stock          |   areaid           |    areaid              |
+| assessmethod |   assessment     | methodshort        |    assessmethod        |
+| assessor     |  assessment      | assessorid         |    assessorid          |
 | management   |                  |                    |                        |
 | taxonomy     |                  |                    |                        |
 
