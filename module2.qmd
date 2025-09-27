@@ -56,15 +56,23 @@ The most common are the Pink Salmon, Sockeye salmon, and the Chum salmon.
 
 -   In your own words, describe the unit of observation in the 'stock' table and some associated variables that describe it.
 
+Stock is one grouping of species in an area. One might be a group of salmon that live in a certain area and the units of observation are where the stock is, and the state of the stock (current, depreciated). The three main associated variable are  Stock parameters, timeseries, and metadata. each of these provide information about the stock in different tables 
+
+## adam double check this please
 ### Q2 (1 point)
 
 The next main metadata table is 'assessment':
 
 -   What is the unit of observation in the 'assessment' table? How is this related to the unit of observation in the 'stock' table?
+Assessment gives each updated assessment of different stocks, Some stocks are assessed more than once so they would have more that one assesment data but still only the most recent in stock.
 
 -   It seems like 'stockid' and 'assessyear' might uniquely identify each assessment. Is this the case? If not, why not?
 
+no, there are repeats of assessyears meaning it can't be used as a unique identifier.
+
 -   Which variable(s) might you use to join 'stock' and 'assessment'?
+Probably stockid
+
 
 ### Q3 (1 point)
 
