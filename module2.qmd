@@ -64,7 +64,7 @@ Stock is one grouping of species in an area. One might be a group of salmon that
 The next main metadata table is 'assessment':
 
 -   What is the unit of observation in the 'assessment' table? How is this related to the unit of observation in the 'stock' table?
-Assessment gives each updated assessment of different stocks, Some stocks are assessed more than once so they would have more that one assesment data but still only the most recent in stock.
+  Assessment gives each updated assessment of different stocks, Some stocks are assessed more than once so they would have more that one assesment data but still only the most recent in stock.
 
 -   It seems like 'stockid' and 'assessyear' might uniquely identify each assessment. Is this the case? If not, why not?
 
@@ -83,12 +83,15 @@ In section B of the Database Quick Guide, additional metadata tables are listed 
 | area         |   stock          |   areaid           |    areaid              |
 | assessmethod |   assessment     | methodshort        |    assessmethod        |
 | assessor     |  assessment      | assessorid         |    assessorid          |
-| management   |                  |                    |                        |
-| taxonomy     |                  |                    |                        |
+| management   |    assessor      |        mgmt        |     mgmt               |
+| taxonomy     |       stock      |   scientificname   |  scientificname        |
 
 \*Note that assessmethod is not a data.frame, which was perhaps an oversight; consider turning it into one for the ease of using tidyverse functions.
-
+```{r}
+assessmethod <- as.data.frame(assessmethod)
+```
 ### Q4 (1 point)
+
 
 There are two main data tables described in section C, but their key attributes are difficult to understand. Join the two main data tables with their respective metrics tables (section D):
 
