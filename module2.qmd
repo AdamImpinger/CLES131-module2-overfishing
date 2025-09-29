@@ -74,7 +74,7 @@ The next main metadata table is 'assessment':
 
 -   What is the unit of observation in the 'assessment' table? How is this related to the unit of observation in the 'stock' table?
 
-    The unit of observation for the assessment table is also stocks, but in this table as examined over extended time periods. Assessment contextualizes each assessment of different stocks, providing context for when the "state" stat was most recently marked and illuminating the methodology of analysis Some stocks are assessed more than once so they would have more that one assessment data but still only the most recent in stock.
+    The unit of observation for the assessment table is also stocks, but as examined over extended time periods. Assessment contextualizes each assessment of different stocks, providing context for when the "state" stat was most recently marked and illuminating the methodology of analysis Some stocks are assessed more than once so they would have more that one assessment data but still only the most recent in stock.
 
 -   It seems like 'stockid' and 'assessyear' might uniquely identify each assessment. Is this the case? If not, why not?
 
