@@ -64,7 +64,7 @@ One of the main metadata tables is 'stock':
 
 -   In your own words, describe the unit of observation in the 'stock' table and some associated variables that describe it.
 
-The unit of obersavation in the 'stock' table is funnily enough stock, with each unit describing a different stock of fish in specific area. These groupings of stock fish are further described by their geographic region, country, and the state of each the stock (current, depreciated).
+The unit of obersavation in the 'stock' table isstock, with each unit describing a different stock of fish in specific area. These groupings of stock fish are further described by their geographic region, country, and the state of each the stock (current, depreciated).
 
 ## 
 
@@ -74,11 +74,11 @@ The next main metadata table is 'assessment':
 
 -   What is the unit of observation in the 'assessment' table? How is this related to the unit of observation in the 'stock' table?
 
-    The unit of observation for the assessment table is also stocks, but as examined over extended time periods. Assessment contextualizes each assessment of different stocks, providing context for when the "state" stat was most recently marked and illuminating the methodology of analysis Some stocks are assessed more than once so they would have more that one assessment data but still only the most recent in stock.
+    The unit of observation for the assessment table is also stocks, but as examined over extended time periods. Assessment contextualizes each assessment of different stocks, providing context for when the "state" stat was most recently marked and illuminating the methodology of analysis. Some stocks are assessed more than once, resulting in multiple inputs for the same stockid, each difrentiated by time.
 
 -   It seems like 'stockid' and 'assessyear' might uniquely identify each assessment. Is this the case? If not, why not?
 
-No, there are repeats of assessyears, meaning it can't be used as a unique identifier, stockid however creates unique identifiers for each assessment, tying each examined stock to a region and specific source
+No, there are repeats of assessyears meaning it can't be used as a unique identifier. Stockid however creates unique identifiers that repeat only when the same stockid is being assed for a distinct time period, tying each examined stock to a region and specific source and time instead of tying timescales to distinct assessment's as could be achieved with assessyear.
 
 -   Which variable(s) might you use to join 'stock' and 'assessment'?
 
@@ -89,10 +89,10 @@ No, there are repeats of assessyears, meaning it can't be used as a unique ident
 In section B of the Database Quick Guide, additional metadata tables are listed in section B. With your data exploration skills, complete the following table:
 
 | B table      | Associated table | join column from B | join column from other |
-|-----------------|-----------------|------------------|---------------------|
+|------------------|------------------|------------------|-------------------|
 | area         | stock            | areaid             | areaid                 |
 | assessmethod | assessment       | methodshort        | assessmethod           |
-| assessor     | assessment       | assessorid         | assessorid             |
+| assessor     | strassessment    | assessorid         | assessorid             |
 | management   | assessor         | mgmt               | mgmt                   |
 | taxonomy     | stock            | scientificname     | scientificname         |
 
@@ -106,9 +106,27 @@ assessmethod <- as.data.frame(assessmethod)
 
 There are two main data tables described in section C, but their key attributes are difficult to understand. Join the two main data tables with their respective metrics tables (section D):
 
+```{r}
+
+joined.bio <- bioparams |> 
+            left_join(biometrics, join_by(bioid==biounique)) |> 
+            glimpse()
+ joined.time <- timeseries |> 
+            left_join(tsmetrics, join_by(tsid==tsunique)) |> 
+            glimpse()
+
+ #view was crashing my r studio, tired glimpse and head(50) to get around this, but head(50) trimmed the full data
+```
+
 -   Briefly describe the contents of each joined table.
 
+    The joined bioparams, which are summary statistics representing the health of the stocks was combind with biometics to provide a detailed life history of each stock.
+
+    #CAN I GET A REVEIW HERE EVAN
+
 -   What is accomplished by joining these tables?
+
+    Joining these tables links analysis to the population it is describing in r, creating a more comprehensive of the stocks being analyzed and contextualizing how these stocks have changed fromt he time series data
 
 ## Overexploitation of Atlantic cod
 
@@ -120,7 +138,37 @@ The collapse of the Atlantic cod fisheries is well documented. Let's see if we c
 
 -   How many unique fish stocks comprise "Atlantic cod" and what regions do they come from?
 
+    there are 28 fishstocks coming from four distinct regions: the east cost of Canada; Europe (non-EU); EU; and the east coast of the US
+
+    ```{r}
+    atlantic.cod.count <- stock |> 
+                    filter(commonname=="Atlantic cod") |> 
+                    count()
+
+    atlantic.cod.count #28
+
+    atlantic.cod.region <- stock |> 
+                        filter(commonname=="Atlantic cod") |> 
+                        select("region")
+                        
+    unique(atlantic.cod.region)
+    ```
+
 Create a vector of the 'stockid' associated with "Atlantic cod". Then turn your attention to the previously-joined timeseries/tsmetrics table and create a subsetted dataframe with only observations of "Atlantic cod" that have a non-NA value. This table reports many years and many metrics, while we are primarily interested in the years since 1950.
+
+```{r}
+atlantic.stockid <- stock |> 
+                    filter(commonname=="Atlantic cod") |> 
+                    select("stockid")
+as.vector(atlantic.stockid)
+
+context.cod <- joined.time |> 
+                    filter(str_detect(stocklong, "Atlantic cod")) |> 
+                    
+
+
+
+```
 
 -   Which metrics are most commonly reported for Atlantic cod in this timeframe and what do they mean?
 
