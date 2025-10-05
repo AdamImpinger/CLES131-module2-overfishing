@@ -198,12 +198,13 @@ unique(context.cod$stockid)
 unique(context.cod$stockid)
 
 context.cod1 <- context.cod |> 
-  filter(stockid == "COD4TVn")
+  filter(stockid == "COD4TVn") |> 
+  filter(tsshort == "TB") #TB means total biomass
 #enter stockname then run code below to see figure for that stock
 view(context.cod1)
 
 ggplot(context.cod1, mapping = aes(x = tsyear, y = tsvalue)) +
-      geom_smooth()
+      geom_line()
 ```
 ### Q7 (1 point)
 
