@@ -218,7 +218,8 @@ ggplot(context.cod1, mapping = aes(x = tsyear, y = tsvalue, color = "region")) +
 ```{r}
 p <- ggplot(data = context.cod.region |> 
               filter(tsshort == "TB"),
-            mapping = aes(x = tsyear, y = tsvalue, color = region, group = region)) + geom_point() + geom_line () 
+            mapping = aes(x = tsyear, y = tsvalue, color = region, group = region)) + geom_point() + geom_line () +
+  theme_gray(base_size = 3)
   
 p + facet_wrap(~ stockid.x, scales = "free_y")
 
