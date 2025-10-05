@@ -120,13 +120,13 @@ joined.bio <- bioparams |>
 
 -   Briefly describe the contents of each joined table.
 
-    The joined bioparams, which are summary statistics representing the health of the stocks was combind with biometics to provide a detailed life history of each stock.
+    The joined bioparams, which are summary statistics representing the health of the stocks was combined with biometics to provide a detailed life history of each stock.
 
-    #CAN I GET A REVEIW HERE EVAN
+    joined.time, is similar where it supplies more details for each stock assessments with more timeseries units.
 
 -   What is accomplished by joining these tables?
-
-    Joining these tables links analysis to the population it is describing in r, creating a more comprehensive of the stocks being analyzed and contextualizing how these stocks have changed fromt he time series data
+  
+  There are multiple reasons this helps, but one is to be able to view the unit used in the timeseries table. The "tsvalue" collumn is unitless, and when joined, there is another collumn that displays the unit. Joining these tables links analysis to the population it is describing in r, creating a more comprehensive of the stocks being analyzed and contextualizing how these stocks have changed from the time series data
 
 ## Overexploitation of Atlantic cod
 
@@ -164,14 +164,27 @@ as.vector(atlantic.stockid)
 
 context.cod <- joined.time |> 
                     filter(str_detect(stocklong, "Atlantic cod")) |> 
-                    
+  filter(tsyear >= 1950) |> 
+  filter(!is.na(tsvalue))
+  
 
+view(context.cod)
+                    
 
 
 ```
 
 -   Which metrics are most commonly reported for Atlantic cod in this timeframe and what do they mean?
+in general, the most common category is total biomass. Individually, it seems like the most common metric is Tow CPUE, which is the number of fish caught per tow.
+```{r}
+cod_freqs <- c(context.cod$tscategory)
+cod_freqs <- max(cod_freqs)
+cod_freqs
 
+cod_freqs <- c(context.cod$tslong)
+cod_freqs <- max(cod_freqs)
+cod_freqs
+```
 ### Q6 (1 point)
 
 Make a timeseries figure for each stock of Atlantic cod. Rather than coloring by the identity of the stock, color by the region it comes from (this may require joining). Use `facet_*()` to plot both metrics in a single code chunk. Connect the points for each stock and focus on the period since 1950. Update until the figure is easily interpretable.
