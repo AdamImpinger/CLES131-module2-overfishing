@@ -45,12 +45,12 @@ A selected set of documentation have been provided in `documentation/`. Open up 
 ### Q1 (1 point)
 
 ```{r}
-unique(stock$commonname)
+#unique(stock$commonname)
 length(stock$commonname)
 length(stock$scientificname)
 
 
-unique(stock$scientificname)
+#unique(stock$scientificname)
 #got a different outcome then 410, your original answer, using the unique command, let me know how you approached this and double chec that
 ```
 
@@ -60,7 +60,9 @@ One of the main metadata tables is 'stock':
 
     There are 1514 different stocks, representing 398 different species.
 
--   What are the top three most common stocks? (Okay to use common names; these are standardized for fish) The most common are the Pink Salmon, Sockeye salmon, and the Chum salmon.
+-   What are the top three most common stocks? (Okay to use common names; these are standardized for fish) 
+
+The most common are the Pink Salmon, Sockeye salmon, and the Chum salmon.
 
 -   In your own words, describe the unit of observation in the 'stock' table and some associated variables that describe it.
 
@@ -110,10 +112,10 @@ There are two main data tables described in section C, but their key attributes 
 
 joined.bio <- bioparams |> 
             left_join(biometrics, join_by(bioid==biounique)) |> 
-            glimpse()
+            #glimpse()
  joined.time <- timeseries |> 
             left_join(tsmetrics, join_by(tsid==tsunique)) |> 
-            glimpse()
+           # glimpse()
 
  #view was crashing my r studio, tired glimpse and head(50) to get around this, but head(50) trimmed the full data
 ```
@@ -151,7 +153,7 @@ The collapse of the Atlantic cod fisheries is well documented. Let's see if we c
                         filter(commonname=="Atlantic cod") |> 
                         select("region")
                         
-    unique(atlantic.cod.region)
+    #unique(atlantic.cod.region)
     ```
 
 Create a vector of the 'stockid' associated with "Atlantic cod". Then turn your attention to the previously-joined timeseries/tsmetrics table and create a subsetted dataframe with only observations of "Atlantic cod" that have a non-NA value. This table reports many years and many metrics, while we are primarily interested in the years since 1950.
@@ -182,7 +184,7 @@ cod_freqs
 
 cod_freqs <- c(context.cod$tslong)
 cod_freqs <- max(cod_freqs)
-unique(context.cod$tslong
+#unique(context.cod$tslong
        )
 ```
 
@@ -194,9 +196,9 @@ Make a timeseries figure for each stock of Atlantic cod. Rather than coloring by
 
 ```{r}
 ##28 unique stocks,
-unique(context.cod$stockid)
+#unique(context.cod$stockid)
 #28 different figures?
-unique(context.cod$stockid)
+#unique(context.cod$stockid)
 
 #adding region data
 
@@ -224,7 +226,7 @@ p + facet_wrap(~ stockid.x, scales = "free_y")
 #this should work but is only displaying 20 /28
 context.cod |> 
   filter(tsunitslong == "Individuals") |>  #can also use "TB" from tsshort
-  count(stockid)
+  #count(stockid)
 #ahhhh but only these 20 have "TB" data,
 #so it worked
 ```
@@ -349,3 +351,13 @@ q8complete_plot
 ### Q9 (2 points)
 
 What happened to Atlantic cod stocks for each region following each piece of legislation or management plan, and why do you think this was so? Your multi-paragraph answer should be informed by content from the book chapter; additional sources are optional, and all sources should be cited.
+
+In 1976, the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA) was passed (Public Law 94-265). This act established a structure to limit overfishing, but did not strictly enforce it. The next year, 1977, an exclusive fishing zone was implemented, requiring foreign vessels closer than 200 miles to the east coast to register for permits to fish.  Even though foreign ships were kept out, domestic fleets could continue fishing. After this act, the sharp decline in cod stocks continued, while total fish landings actually increased.This is partially because this act created regional fishery management councils, but didn’t set enough restrictions.
+
+One decade later, in 1986, the Northeast Multispecies Fishery Management Plan was passed(New England Fishery Management Council. Northeast Multispecies Fishery Management Plan) . This act had more specific rules that aimed to protect degraded species. Among these were minimum net sizes set so that smaller fish would be able to escape trawlers, and minimum fish sizes requiring that those younger fish would be released, and be able to live and reproduce. After this point, it seems like fish landings declined sharply. Even though these limits were set and not as many fish were landed, stocks couldn’t recover quickly enough and continued to decline. 
+
+It got to such a point of concern that in 1992 a moratorium on commercial fishing was declared (Castro, M., Rafferty, J.P. (2025, June 20). cod fishery collapse of 1992. Encyclopedia Britannica). It is hard to rebuild depleted stocks. Regardless of the 1992 moratorium’s 0 fish landings, stocks stayed low.
+In 1996 (Public Law 94-265), the sustainable fisheries act was passed. This reworking of the 1976 act explicitly states how regional councils need to end overfishing and assist in rebuilding depleted stocks.
+Due to continued deprecation, the act was reworked in 2006 (Public Law 94-265). This Magnuson-Stevens Fishery Conservation and Management Reauthorization Act enforced annual catch limits (ACLs). ACLs are a much more overarching form of catch limiting. With other forms like minimum fish size or net size, fishers can continue fishing and depleting stocks even if only 10% of their catch meet retention standards. With ACLs, fishers are forced to completely stop catching once they have reached their limit. 
+From our data, we can see a potential effect of these ACLs. After 2010, total biomass increased dramatically.
+
