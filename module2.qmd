@@ -191,6 +191,20 @@ Make a timeseries figure for each stock of Atlantic cod. Rather than coloring by
 
 -   What happened to Atlantic cod stocks during the period 1950-present? What information does each metric convey?
 
+```{r}
+##28 unique stocks,
+unique(context.cod$stockid)
+#28 different figures?
+unique(context.cod$stockid)
+
+context.cod1 <- context.cod |> 
+  filter(stockid == "COD4TVn")
+#enter stockname then run code below to see figure for that stock
+view(context.cod1)
+
+ggplot(context.cod1, mapping = aes(x = tsyear, y = tsvalue)) +
+      geom_smooth()
+```
 ### Q7 (1 point)
 
 We will recreate a slightly more complex version of a figure from the [Millennium Ecosystem Assessment](https://www.millenniumassessment.org/documents/document.356.aspx.pdf) (Fig. 11).
