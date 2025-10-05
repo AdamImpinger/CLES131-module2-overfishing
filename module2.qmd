@@ -51,7 +51,7 @@ length(stock$scientificname)
 
 
 #unique(stock$scientificname)
-#got a different outcome then 410, your original answer, using the unique command, let me know how you approached this and double chec that
+#got a different outcome then 410, your original answer, using the unique command, let me #know how you approached this and double chec that
 ```
 
 One of the main metadata tables is 'stock':
@@ -112,10 +112,10 @@ There are two main data tables described in section C, but their key attributes 
 
 joined.bio <- bioparams |> 
             left_join(biometrics, join_by(bioid==biounique)) |> 
-            #glimpse()
- joined.time <- timeseries |> 
+            glimpse()
+joined.time <- timeseries |> 
             left_join(tsmetrics, join_by(tsid==tsunique)) |> 
-           # glimpse()
+            glimpse()
 
  #view was crashing my r studio, tired glimpse and head(50) to get around this, but head(50) trimmed the full data
 ```
@@ -128,7 +128,7 @@ joined.bio <- bioparams |>
 
 -   What is accomplished by joining these tables?
 
-There are multiple reasons this helps, the simpilest of those being the ability to view the unit used in the timeseries table. The "tsvalue" collumn is unitless, and when joined, there is another collumn that displays the unit. Joining these tables links analysis to the population it is describing, creating a more comprehensive picture of the stocks being analyzed and contextualizing how these stocks have changed from the time series data.
+There are multiple reasons this helps, the simplest of those being the ability to view the unit used in the timeseries table. The "tsvalue" column is unitless, and when joined, there is another column that displays the unit. Joining these tables links analysis to the population it is describing, creating a more comprehensive picture of the stocks being analyzed and contextualizing how these stocks have changed from the time series data.
 
 ## Overexploitation of Atlantic cod
 
@@ -184,7 +184,7 @@ cod_freqs
 
 cod_freqs <- c(context.cod$tslong)
 cod_freqs <- max(cod_freqs)
-#unique(context.cod$tslong
+unique(context.cod$tslong
        )
 ```
 
@@ -223,16 +223,20 @@ p <- ggplot(data = context.cod.region |>
 p + facet_wrap(~ stockid.x, scales = "free_y")
 
 
+#context.cod$tsshort[context.cod$tsunitslong == "Individuals"]
+
+
+unique(context.cod$tsunitslong)
+
+
+
+
 #this should work but is only displaying 20 /28
 context.cod |> 
   filter(tsunitslong == "Individuals") |>  #can also use "TB" from tsshort
-  #count(stockid)
+  count(stockid)
 #ahhhh but only these 20 have "TB" data,
 #so it worked
-```
-
-```{r}
-p + facet_wrap(~ stockid.x, scales = "free_y")
 ```
 
 \`\`\` \### Q7 (1 point)
