@@ -197,14 +197,38 @@ unique(context.cod$stockid)
 #28 different figures?
 unique(context.cod$stockid)
 
+#adding region data
+
+context.cod <- context.cod |> 
+  left_join(stock, join_by(stocklong))
+
 context.cod1 <- context.cod |> 
   filter(stockid == "COD4TVn") |> 
   filter(tsshort == "TB") #TB means total biomass
 #enter stockname then run code below to see figure for that stock
 view(context.cod1)
 
-ggplot(context.cod1, mapping = aes(x = tsyear, y = tsvalue)) +
+ggplot(context.cod1, mapping = aes(x = tsyear, y = tsvalue, color = "region")) +
       geom_line()
+```
+
+```{r}
+p <- ggplot(data = context.cod |> 
+              filter(tsshort == "TB"),
+            mapping = aes(x = tsyear, y = tsvalue, color = region, group = region)) + geom_point() 
+  
+  
+p + facet_wrap(~ stockid.x, scales = "free_y")
+
+#this should work but is only displaying 20 /28
+context.cod |> 
+  filter(tsshort == "TB") |> 
+  count(stockid)
+#ahhhh but only these 20 have "TB" data,
+#so it worked
+```
+
+
 ```
 ### Q7 (1 point)
 
