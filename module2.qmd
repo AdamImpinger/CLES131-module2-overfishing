@@ -221,20 +221,16 @@ p <- ggplot(data = context.cod.region |>
 p + facet_wrap(~ stockid.x, scales = "free_y")
 
 
-context.cod$tsshort[context.cod$tsunitslong == "Individuals"]
-
-
-unique(context.cod$tsunitslong)
-
-
-
-
 #this should work but is only displaying 20 /28
 context.cod |> 
   filter(tsunitslong == "Individuals") |>  #can also use "TB" from tsshort
   count(stockid)
 #ahhhh but only these 20 have "TB" data,
 #so it worked
+```
+
+```{r}
+p + facet_wrap(~ stockid.x, scales = "free_y")
 ```
 
 \`\`\` \### Q7 (1 point)
@@ -343,7 +339,7 @@ labs(title = "Time Series with Major Policy Events",
        y = "Spawning Stock Biomass (in Metric Tons)")+
   coord_cartesian(clip = "off")
 
-q8comp_plot
+q8complete_plot
 
 
 
