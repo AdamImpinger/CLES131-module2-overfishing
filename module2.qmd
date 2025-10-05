@@ -263,7 +263,7 @@ t.craft <- context.cod.region |>
 Under the Management Policies section of the [book chapter](https://pressbooks.pub/extinctionstories/chapter/atlantic-cod/), the authors summarize a few major efforts to restore and protect stocks of Atlantic cod. Focusing only on the US and Canada, update your plot from above to include vertical lines to represent the timing of least three major events and label them clearly on your plot. Doing so will likely involve creating a separate dataframe and using it in one of your ggplot layers (one possible argument within `aes()` is `linetype`). Facet the plot by region and update until it is easily interpretable.
 
 ```{r}
-q8_plot <- ggplot(
+q8_preplot <- ggplot(
   data = context.cod.region |>
     filter(
       tsshort == "SSB",
@@ -273,9 +273,81 @@ q8_plot <- ggplot(
 ) +
   geom_line() +
   geom_smooth()
+q8_preplot
+
+```
+
+```{r}
+policy.change <- c(1976,1986,1996,2006)
+q8_plot <- ggplot(
+  data = context.cod.region |>
+    filter(
+      tsshort == "SSB",
+      region %in% c("Canada East Coast", "US East Coast")
+    ),
+  mapping = aes(x = tsyear, y = tsvalue, color = region)
+)  +
+  geom_smooth(se = FALSE, method = "loess", span = .1)+
+geom_vline(xintercept = policy.change[1], color="darkslategrey", linetype="dashed", size=0.8 )+
+geom_vline(xintercept = policy.change[2], color="darkslategrey", linetype="dashed", size=0.8 )+
+geom_vline(xintercept = policy.change[3], color="darkslategrey", linetype="dashed", size=0.8 )+
+geom_vline(xintercept = policy.change[4], color="darkslategrey", linetype="dashed", size=0.8 )+
+labs(title = "Time Series with Major Policy Events",
+       x = "Time",
+       y = "Spawning Stock Biomass (in Metric Tons)")
 
 q8_plot
-policy.change <- 
+
+
+```
+
+```{r}
+policy.years <- data.frame(
+  year = c(1976, 1986, 1992, 1996),
+  event = c("1976 Conservation Act",
+    "1986 Multispecies Plan",
+    "1992 Moratorium",
+    "1996 Sustainable Fisheries Act")
+)
+
+
+q8complete_plot <- ggplot(
+  data = context.cod.region |>
+    filter(
+      tsshort == "SSB",
+      region %in% c("Canada East Coast", "US East Coast")
+    ),
+  mapping = aes(x = tsyear, y = tsvalue, color = region)
+)  +
+  geom_smooth(se = FALSE, method = "loess", span = .1)+
+geom_vline(
+    data = policy.years,
+    aes(xintercept = year),
+    inherit.aes = FALSE,
+    linetype = "dashed",
+    color = "darkslategrey",
+    linewidth = 0.5
+  ) +
+  geom_text(
+    data = policy.years,
+    aes(x = year, y = Inf, label = event),
+    angle = 285,
+    inherit.aes = FALSE,
+    color = "darkslategrey",
+    vjust = 0.3,  
+    hjust = 0,
+    size = 3
+  ) +
+labs(title = "Time Series with Major Policy Events",
+       x = "Time",
+       y = "Spawning Stock Biomass (in Metric Tons)")+
+  coord_cartesian(clip = "off")
+
+q8comp_plot
+
+
+
+
 ```
 
 ### Q9 (2 points)
